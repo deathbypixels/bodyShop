@@ -1,0 +1,30 @@
+set cut_paste_input [stack 0]
+version 9.0 v7
+push $cut_paste_input
+OFXuk.co.thefoundry.furnace.f_denoise_v403 {
+colourSpace Cineon
+amount 1
+plateSize "PAL or NTSC"
+suppRinging false
+output Result
+noise 10
+"Analysis Region" 0
+centre {960 540}
+frame 1
+Advanced 0
+redAmount 1
+greenAmount 1
+blueAmount 1
+needToAnalyse true
+sampleFrameHasBeenInitialised false
+notBeenMoved true
+beenHereBefore false
+inputHasChanged false
+beenHereBefore2 false
+dontAnalyse false
+cacheBreaker true
+name F_DeNoise1
+selected true
+xpos 235
+ypos 710
+}

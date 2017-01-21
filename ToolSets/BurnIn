@@ -1,0 +1,270 @@
+set cut_paste_input [stack 0]
+version 10.5 v1
+push $cut_paste_input
+Group {
+ name Group1
+ help "Applies a text burn-in to the media.\n\nUp to 6 pieces of metadata can be added to the shot"
+ selected true
+ xpos 1060
+ ypos -105
+ addUserKnob {20 burnIn_tab l BurnIn}
+ addUserKnob {19 burnIn_color l color t "The text color"}
+ burnIn_color 1
+ addUserKnob {6 burnIn_color_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {7 burnIn_opacity l opacity t "The text opacity"}
+ burnIn_opacity 1
+ addUserKnob {7 burnIn_xPadding l x-padding t "The distance between the Burn-in text and the left and right image borders" R 10 100}
+ burnIn_xPadding 30
+ addUserKnob {7 burnIn_yPadding l y-padding t "The distance between the Burn-in text and the top and bottom image borders" R 10 100}
+ burnIn_yPadding 30
+ addUserKnob {84 burnIn_font l font}
+ addUserKnob {7 burnIn_textScale l "text scale" R 0 2}
+ burnIn_textScale 0.5
+ addUserKnob {26 ""}
+ addUserKnob {85 burnIn_topLeft l "top left" t "The key for the metadata to display at this position of the burn-in" M {none hiero/clip hiero/project hiero/reel hiero/sequence hiero/sequence/frame_rate hiero/sequence/timecode hiero/shot hiero/track input/filename input/frame input/frame_rate input/timecode}}
+ burnIn_topLeft input/filename
+ addUserKnob {85 burnIn_topMiddle l "top middle" t "The key for the metadata to display at this position of the burn-in" M {none hiero/clip hiero/project hiero/reel hiero/sequence hiero/sequence/frame_rate hiero/sequence/timecode hiero/shot hiero/track input/filename input/frame input/frame_rate input/timecode}}
+ burnIn_topMiddle input/frame
+ addUserKnob {85 burnIn_topRight l "top right" t "The key for the metadata to display at this position of the burn-in" M {none hiero/clip hiero/project hiero/reel hiero/sequence hiero/sequence/frame_rate hiero/sequence/timecode hiero/shot hiero/track input/filename input/frame input/frame_rate input/timecode}}
+ burnIn_topRight hiero/shot
+ addUserKnob {85 burnIn_bottomLeft l "bottom left" t "The key for the metadata to display at this position of the burn-in" M {none hiero/clip hiero/project hiero/reel hiero/sequence hiero/sequence/frame_rate hiero/sequence/timecode hiero/shot hiero/track input/filename input/frame input/frame_rate input/timecode}}
+ burnIn_bottomLeft hiero/track
+ addUserKnob {85 burnIn_bottomMiddle l "bottom middle" t "The key for the metadata to display at this position of the burn-in" M {none hiero/clip hiero/project hiero/reel hiero/sequence hiero/sequence/frame_rate hiero/sequence/timecode hiero/shot hiero/track input/filename input/frame input/frame_rate input/timecode}}
+ burnIn_bottomMiddle input/frame_rate
+ addUserKnob {85 burnIn_bottomRight l "bottom right" t "The key for the metadata to display at this position of the burn-in" M {none hiero/clip hiero/project hiero/reel hiero/sequence hiero/sequence/frame_rate hiero/sequence/timecode hiero/shot hiero/track input/filename input/frame input/frame_rate input/timecode}}
+ burnIn_bottomRight input/frame
+ addUserKnob {20 Background}
+ addUserKnob {6 burnIn_backgroundEnable l enable t "Enable a background for the Burn-in text. A background will be applied to each Burn-in field" -STARTLINE}
+ addUserKnob {19 burnIn_backgroundColor l color t "The background color"}
+ burnIn_backgroundColor {0 0 0 1}
+ addUserKnob {6 burnIn_backgroundColor_panelDropped l "panel dropped state" -STARTLINE +HIDDEN}
+ addUserKnob {7 burnIn_backgroundOpacity l opacity t "The background opacity"}
+ burnIn_backgroundOpacity 1
+ addUserKnob {7 burnIn_backgroundXBorder l x-border t "The distance between the background and the left and right edges of the text. This can be used to adjust the size of the background in the x-direction" R 0 50}
+ burnIn_backgroundXBorder 10
+ addUserKnob {7 burnIn_backgroundYBorder l y-border t "The distance between the background and the top and bottom edges of the text. This can be used to adjust the size of the background in the y-direction" R 0 50}
+ burnIn_backgroundYBorder 5
+}
+ Input {
+  inputs 0
+  name Input1
+  xpos -260
+  ypos 39
+ }
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  opacity {{parent.burnIn_opacity}}
+  message "\[python nuke.thisNode().metadata(nuke.toNode(nuke.thisNode().fullName().split('.')\\\[len(nuke.thisNode().fullName().split('.'))-2\\]).knob(\"burnIn_topLeft\").value(), \[frame])]"
+  old_message {{47 118 97 114 47 116 109 112 47 110 117 107 101 45 117 53 48 49 47 108 111 99 97 108 105 122 101 47 95 86 111 108 117 109 101 115 47 67 97 108 68 105 103 105 116 32 54 84 66 32 82 65 73 68 32 48 32 84 51 47 80 114 111 106 101 99 116 115 47 98 111 100 121 115 104 111 112 47 84 71 68 49 48 56 95 84 95 48 49 95 48 49 49 48 95 66 79 68 47 50 48 52 56 120 49 49 53 50 47 84 71 68 49 48 56 95 84 95 48 49 95 48 49 49 48 95 66 79 68 95 48 48 49 48 48 49 46 100 112 120}
+    }
+  old_expression_markers {{0 139}
+    }
+  box {{parent.burnIn_xPadding} {parent.burnIn_yPadding} {"width - parent.burnIn_xPadding"} {"height - parent.burnIn_yPadding"}}
+  transforms {{0 2}
+    }
+  font {[value parent.burnIn_font]}
+  global_font_scale {{parent.burnIn_textScale}}
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1556}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 1024 778 0 0 1 1 0 0 0 0}
+    }
+  color {{parent.burnIn_color} {parent.burnIn_color} {parent.burnIn_color} {parent.burnIn_color}}
+  enable_background {{parent.burnIn_backgroundEnable}}
+  background_color {{parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor}}
+  background_opacity {{burnIn_backgroundOpacity}}
+  background_border_x {{parent.burnIn_backgroundXBorder}}
+  background_border_y {{parent.burnIn_backgroundYBorder}}
+  name Text_TL
+  selected true
+  xpos -260
+  ypos 135
+ }
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  opacity {{parent.burnIn_opacity}}
+  message "\[python nuke.thisNode().metadata(nuke.toNode(nuke.thisNode().fullName().split('.')\\\[len(nuke.thisNode().fullName().split('.'))-2\\]).knob(\"burnIn_topMiddle\").value(), \[frame])]"
+  old_message {{49 48 48 49}
+    }
+  old_expression_markers {{0 3}
+    }
+  box {{parent.burnIn_xPadding} {parent.burnIn_yPadding} {"width - parent.burnIn_xPadding"} {"height - parent.burnIn_yPadding"}}
+  xjustify center
+  transforms {{0 2}
+    }
+  cursor_position 77
+  font {[value parent.burnIn_font]}
+  global_font_scale {{parent.burnIn_textScale}}
+  scale {1 1}
+  center {1024 778}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1556}
+    }
+  group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+  animation_layers {{1 11 1024 778 0 0 1 1 0 0 0 0}
+    }
+  color {{parent.burnIn_color} {parent.burnIn_color} {parent.burnIn_color} {parent.burnIn_color}}
+  enable_background {{parent.burnIn_backgroundEnable}}
+  background_color {{parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor}}
+  background_opacity {{burnIn_backgroundOpacity}}
+  background_border_x {{parent.burnIn_backgroundXBorder}}
+  background_border_y {{parent.burnIn_backgroundYBorder}}
+  name Text_TM
+  xpos -95
+  ypos 135
+ }
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  opacity {{parent.burnIn_opacity}}
+  message "\[python nuke.thisNode().metadata(nuke.toNode(nuke.thisNode().fullName().split('.')\\\[len(nuke.thisNode().fullName().split('.'))-2\\]).knob(\"burnIn_topRight\").value(), \[frame])]"
+  old_expression_markers {{0 -1}
+    }
+  box {{parent.burnIn_xPadding} {parent.burnIn_yPadding} {"width - parent.burnIn_xPadding"} {"height - parent.burnIn_yPadding"}}
+  xjustify right
+  transforms {{0 2}
+    }
+  cursor_position 88
+  font {[value parent.burnIn_font]}
+  global_font_scale {{parent.burnIn_textScale}}
+  scale {1 1}
+  center {1024 778}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1556}
+    }
+  group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+  animation_layers {{1 11 1024 778 0 0 1 1 0 0 0 0}
+    }
+  color {{parent.burnIn_color} {parent.burnIn_color} {parent.burnIn_color} {parent.burnIn_color}}
+  enable_background {{parent.burnIn_backgroundEnable}}
+  background_color {{parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor}}
+  background_opacity {{burnIn_backgroundOpacity}}
+  background_border_x {{parent.burnIn_backgroundXBorder}}
+  background_border_y {{parent.burnIn_backgroundYBorder}}
+  name Text_TR
+  xpos 70
+  ypos 135
+ }
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  opacity {{parent.burnIn_opacity}}
+  message "\[python nuke.thisNode().metadata(nuke.toNode(nuke.thisNode().fullName().split('.')\\\[len(nuke.thisNode().fullName().split('.'))-2\\]).knob(\"burnIn_bottomLeft\").value(), \[frame])]"
+  old_expression_markers {{0 -1}
+    }
+  box {{parent.burnIn_xPadding} {parent.burnIn_yPadding} {"width - parent.burnIn_xPadding"} {"height - parent.burnIn_yPadding"}}
+  yjustify bottom
+  transforms {{0 2}
+    }
+  cursor_position 74
+  font {[value parent.burnIn_font]}
+  global_font_scale {{parent.burnIn_textScale}}
+  scale {1 1}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1556}
+    }
+  group_animations {{0} imported: 0 selected: items: "root transform/"}
+  animation_layers {{1 11 1024 778 0 0 1 1 0 0 0 0}
+    }
+  color {{parent.burnIn_color} {parent.burnIn_color} {parent.burnIn_color} {parent.burnIn_color}}
+  enable_background {{parent.burnIn_backgroundEnable}}
+  background_color {{parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor}}
+  background_opacity {{burnIn_backgroundOpacity}}
+  background_border_x {{parent.burnIn_backgroundXBorder}}
+  background_border_y {{parent.burnIn_backgroundYBorder}}
+  name Text_BL
+  xpos -260
+  ypos 231
+ }
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  opacity {{parent.burnIn_opacity}}
+  message "\[python nuke.thisNode().metadata(nuke.toNode(nuke.thisNode().fullName().split('.')\\\[len(nuke.thisNode().fullName().split('.'))-2\\]).knob(\"burnIn_bottomMiddle\").value(), \[frame])]"
+  old_message {{50 51 46 57 55 53 57 57 57 56 51 50 50}
+    }
+  old_expression_markers {{0 12}
+    }
+  box {{parent.burnIn_xPadding} {parent.burnIn_yPadding} {"width - parent.burnIn_xPadding"} {"height - parent.burnIn_yPadding"}}
+  xjustify center
+  yjustify bottom
+  transforms {{0 2}
+    }
+  cursor_position 80
+  font {[value parent.burnIn_font]}
+  global_font_scale {{parent.burnIn_textScale}}
+  scale {1 1}
+  center {1024 778}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1556}
+    }
+  group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+  animation_layers {{1 11 1024 778 0 0 1 1 0 0 0 0}
+    }
+  color {{parent.burnIn_color} {parent.burnIn_color} {parent.burnIn_color} {parent.burnIn_color}}
+  enable_background {{parent.burnIn_backgroundEnable}}
+  background_color {{parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor}}
+  background_opacity {{burnIn_backgroundOpacity}}
+  background_border_x {{parent.burnIn_backgroundXBorder}}
+  background_border_y {{parent.burnIn_backgroundYBorder}}
+  name Text_BM
+  xpos -95
+  ypos 231
+ }
+ Text2 {
+  font_size_toolbar 100
+  font_width_toolbar 100
+  font_height_toolbar 100
+  opacity {{parent.burnIn_opacity}}
+  message "\[python nuke.thisNode().metadata(nuke.toNode(nuke.thisNode().fullName().split('.')\\\[len(nuke.thisNode().fullName().split('.'))-2\\]).knob(\"burnIn_bottomRight\").value(), \[frame])]"
+  old_message {{49 48 48 49}
+    }
+  old_expression_markers {{0 3}
+    }
+  box {{parent.burnIn_xPadding} {parent.burnIn_yPadding} {"width - parent.burnIn_xPadding"} {"height - parent.burnIn_yPadding"}}
+  xjustify right
+  yjustify bottom
+  transforms {{0 2}
+    }
+  cursor_position 91
+  font {[value parent.burnIn_font]}
+  global_font_scale {{parent.burnIn_textScale}}
+  scale {1 1}
+  center {1024 778}
+  cursor_initialised true
+  autofit_bbox false
+  initial_cursor_position {{0 1556}
+    }
+  group_animations {{0} imported: 0 selected: 0 items: "root transform/"}
+  animation_layers {{1 11 1024 778 0 0 1 1 0 0 0 0}
+    }
+  color {{parent.burnIn_color} {parent.burnIn_color} {parent.burnIn_color} {parent.burnIn_color}}
+  enable_background {{parent.burnIn_backgroundEnable}}
+  background_color {{parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor} {parent.burnIn_backgroundColor}}
+  background_opacity {{burnIn_backgroundOpacity}}
+  background_border_x {{parent.burnIn_backgroundXBorder}}
+  background_border_y {{parent.burnIn_backgroundYBorder}}
+  name Text_BR
+  xpos 70
+  ypos 231
+ }
+ Output {
+  name Output1
+  xpos 70
+  ypos 327
+ }
+end_group

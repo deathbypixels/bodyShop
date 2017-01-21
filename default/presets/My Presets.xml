@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<defaults>
+  <default knob="after" node="Read">black</default>
+  <default knob="before" node="Read">black</default>
+  <default knob="before" node="Retime">black</default>
+  <default knob="after" node="Retime">black</default>
+  <default knob="channels" node="Invert">alpha</default>
+  <default knob="channels" node="Dilate">alpha</default>
+  <default knob="filter" node="Retime">none</default>
+  <default knob="postage_stamp" node="Roto">true</default>
+  <default knob="hide_progress_bar" node="Tracker4">true</default>
+</defaults>

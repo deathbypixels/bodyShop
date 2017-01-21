@@ -1,0 +1,344 @@
+Gizmo {
+ inputs 3
+ tile_color 0xf8ff00ff
+ addUserKnob {20 fxT_edgeMatte l fxt_edgeMatte}
+ addUserKnob {7 DialateOutside_Slider l "external edge:          " t "Drag the slider to grow/shrink the outside matte." R 0 100}
+ DialateOutside_Slider 1
+ addUserKnob {6 offOutsideMatteSize l on/off t "tur off outside matte alteration\n" -STARTLINE}
+ addUserKnob {7 ErodeInside_Slider l "internal edge:           " t "Drag the slider to grow/shrink the inside matte." R 0 100}
+ ErodeInside_Slider 1
+ addUserKnob {6 offInsideMatteSize l on/off t "tur off inside matte alteration\n" -STARTLINE}
+ addUserKnob {26 divline0 l "" +STARTLINE}
+ addUserKnob {7 BlurOutside_Slider l "blur external edge:    " t "Drag the slider to blur the external edge." R 0 100}
+ addUserKnob {6 offBlurOutside l on/off t "turn off outside matte blur" -STARTLINE}
+ addUserKnob {7 BlurInside_Slider l "blur internal edge:     " t "Drag the slider to blur the internal edge." R 0 100}
+ addUserKnob {6 offBlurInside l on/off t "turn off inside matte blur" -STARTLINE}
+ addUserKnob {26 divline1 l "" +STARTLINE}
+ addUserKnob {7 OverallBlur_Slider l "overall matte blur:     " t "Drag the slider to add overall blur to the edge matte." R 0 100}
+ addUserKnob {26 divline2 l "" +STARTLINE}
+ addUserKnob {7 offset l "center offset:            " t "Drag the slider to offset the edgeMatte.\n0 = no offset.\n\nThis will result in scaling or shrinking the edgeMatte." R -1 1}
+ addUserKnob {26 divline3 l "" +STARTLINE}
+ addUserKnob {4 previewColor l "       preview overlay color:  " t "Pick the overlay color to use when the plate input is in use.\n\nThis is intended to show a preview of the edgeMatte if there is a plate input. If no plate input exists, there will not be a overlay displayed.\nHandy for getting a visual representation of edgematte." -STARTLINE M {red green blue "" "" "" ""}}
+ previewColor blue
+ addUserKnob {7 previewOpacity l "preview opacity:       " t "Drag the slider to set the opacity of the preview overlay."}
+ previewOpacity 0.4
+ addUserKnob {26 divline4 l "" +STARTLINE}
+ addUserKnob {6 invertMask l "invert mask" t "Click this to invert the mask input.\n____________________________<br />\nInvert mask is only applied to the mask input of this node and will not affect the main alpha-input." +STARTLINE}
+ addUserKnob {26 divline5 l "" +STARTLINE}
+ addUserKnob {26 info l "" +STARTLINE T "<font color=grey>This tool creates an edge matte based on the alpha input.<br />\nDrag the sliders to addjust the edgeMatte to fit your compositing needs.<br /><br />\nPS: The plate input is for previewing the edge matte over a plate.<br />This node only outputs an alpha channel. RGB is only preserved in preview mode. </font>"}
+ addUserKnob {26 divline6 l "" +STARTLINE}
+ addUserKnob {26 copyright l "" +STARTLINE T "<font color='#454545'>// fxT_edgeMatte v1.4 © Tor Andreassen - www.fxtor.net </font>"}
+}
+ BackdropNode {
+  inputs 0
+  name createEdge
+  tile_color 0x44444401
+  gl_color 0x44444401
+  label "erode/dialate to create the edgematte\n"
+  note_font "Arial Black"
+  note_font_size 20
+  xpos -1096
+  ypos 266
+  bookmark false
+  bdwidth 1658
+  bdheight 688
+ }
+ BackdropNode {
+  inputs 0
+  name "preview edgematte over RGB"
+  tile_color 0x44444401
+  gl_color 0x44444401
+  label "preview edgematte"
+  note_font "Arial Black"
+  note_font_size 20
+  xpos -1092
+  ypos 1415
+  bookmark false
+  bdwidth 1665
+  bdheight 897
+ }
+ BackdropNode {
+  inputs 0
+  name "remove inverted matte if mask is used"
+  tile_color 0x44444401
+  gl_color 0x44444401
+  label "remove inverted matte if mask is used"
+  note_font "Arial Black"
+  note_font_size 20
+  xpos -1093
+  ypos 972
+  bookmark false
+  bdwidth 1665
+  bdheight 424
+ }
+ Input {
+  inputs 0
+  name mask
+  label "\[value number]"
+  xpos -975
+  ypos 1031
+  number 1
+ }
+ Dot {
+  name Dot14
+  xpos -953
+  ypos 1112
+ }
+set N191c9b70 [stack 0]
+ NoOp {
+  name autoAlphaCheck
+  xpos -812
+  ypos 1120
+  addUserKnob {20 autoAlphaCheck}
+  addUserKnob {6 a +STARTLINE}
+  a {{"\[string first \".a\" \[channels \[input this 0]]]>-1"}}
+ }
+push $N191c9b70
+ Invert {
+  name InvertMask
+  xpos -975
+  ypos 1193
+  disable {{(parent.invertMask)}}
+ }
+ Expression {
+  expr0 r
+  expr1 g
+  expr2 b
+  expr3 a<0.6?smoothstep(0,0.6,a):1
+  name smoothStep
+  label "kill visable pixels on the edge of the inverted matte"
+  xpos -975
+  ypos 1271
+ }
+ Input {
+  inputs 0
+  name alpha
+  label "\[value number]"
+  xpos -526
+  ypos 71
+ }
+ Remove {
+  channels rgb
+  name Remove1
+  label "kill RGB channels"
+  xpos -526
+  ypos 185
+ }
+ Dot {
+  name Dot6
+  tile_color 0x494949ff
+  xpos -504
+  ypos 416
+ }
+set N297aa8f0 [stack 0]
+ Dot {
+  name Dot7
+  tile_color 0x494949ff
+  xpos -315
+  ypos 416
+ }
+ Erode {
+  size {{(ErodeInside_Slider)-1}}
+  name ErodeInside
+  xpos -337
+  ypos 502
+  disable {{this.parent.offInsideMatteSize}}
+ }
+ Blur {
+  size {{(BlurInside_Slider)+(OverallBlur_Slider)}}
+  name BlurInside
+  xpos -337
+  ypos 560
+  disable {{this.parent.offBlurInside}}
+ }
+ Dot {
+  name Dot9
+  tile_color 0x494949ff
+  xpos -315
+  ypos 674
+ }
+push $N297aa8f0
+ Dot {
+  name Dot5
+  tile_color 0x494949ff
+  xpos -670
+  ypos 416
+ }
+ Dilate {
+  size {{parent.DialateOutside_Slider}}
+  name DialateOutside
+  xpos -692
+  ypos 514
+  disable {{this.parent.offOutsideMatteSize}}
+ }
+ Blur {
+  size {{(BlurOutside_Slider)+(OverallBlur_Slider)}}
+  name BlurOutside
+  xpos -692
+  ypos 566
+  disable {{this.parent.offBlurOutside}}
+ }
+ Dot {
+  name Dot2
+  tile_color 0x494949ff
+  xpos -670
+  ypos 674
+ }
+ Merge2 {
+  inputs 2
+  operation stencil
+  name Merge1
+  xpos -526
+  ypos 682
+ }
+ Transform {
+  scale {{parent.offset+1}}
+  center {{(((input.bbox.r)-(input.bbox.x))/2)+(input.bbox.x)} {(((input.bbox.t)-(input.bbox.y))/2)+(input.bbox.y)}}
+  name offsetEdgeMatte
+  xpos -526
+  ypos 729
+ }
+ Merge2 {
+  inputs 2
+  operation stencil
+  name Merge2
+  label "removes inverted matte if custom mask exists"
+  xpos -526
+  ypos 1271
+  disable {{!parent.autoAlphaCheck.a}}
+ }
+ Dot {
+  name Dot8
+  tile_color 0x494949ff
+  xpos -504
+  ypos 1769
+ }
+set N1db70fd0 [stack 0]
+ Dot {
+  name Dot1
+  tile_color 0x494949ff
+  xpos -504
+  ypos 1996
+ }
+set N29888650 [stack 0]
+ Dot {
+  name Dot11
+  tile_color 0x494949ff
+  label "\n\ninclude edgeMatte alpha channel in preview mode"
+  xpos -25
+  ypos 1996
+ }
+push $N1db70fd0
+ Multiply {
+  channels alpha
+  value {{parent.previewOpacity}}
+  name MultiplyOverlay
+  xpos -190
+  ypos 1771
+ }
+ Input {
+  inputs 0
+  name plate
+  label "\[value number]"
+  xpos 377
+  ypos 69
+  number 2
+ }
+ Dot {
+  name Dot12
+  tile_color 0x494949ff
+  xpos 399
+  ypos 1474
+ }
+set N2985eed0 [stack 0]
+ Remove {
+  name Remove2
+  xpos 44
+  ypos 1476
+ }
+ Shuffle {
+  name Shuffle5
+  label rgba
+  xpos 44
+  ypos 1540
+ }
+set N2985d550 [stack 0]
+ Add {
+  value {0 0 1 1}
+  name Add3
+  tile_color 0xffff
+  xpos 141
+  ypos 1591
+ }
+push $N2985d550
+ Add {
+  value {0 1 0 1}
+  name Add2
+  tile_color 0xff00ff
+  xpos 44
+  ypos 1587
+ }
+push $N2985d550
+ Add {
+  value {1 0 0 1}
+  name Add1
+  tile_color 0xff0000ff
+  xpos -53
+  ypos 1587
+ }
+ Switch {
+  inputs 3
+  which {{previewColor}}
+  name SwitchOverlay
+  tile_color 0x272727ff
+  xpos 44
+  ypos 1666
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy1
+  xpos 44
+  ypos 1771
+ }
+ Premult {
+  name Premult1
+  xpos 44
+  ypos 1818
+ }
+push $N2985eed0
+ Merge2 {
+  inputs 2
+  name Merge3
+  xpos 377
+  ypos 1818
+ }
+ Copy {
+  inputs 2
+  from0 rgba.alpha
+  to0 rgba.alpha
+  name Copy2
+  xpos 377
+  ypos 2001
+ }
+ Dot {
+  name Dot10
+  tile_color 0x494949ff
+  xpos 399
+  ypos 2130
+ }
+push $N29888650
+ Switch {
+  inputs 2
+  which {{"\[exists parent.input2.label]"}}
+  name previewMatte
+  xpos -526
+  ypos 2139
+ }
+ Output {
+  name Output1
+  xpos -526
+  ypos 2479
+ }
+end_group

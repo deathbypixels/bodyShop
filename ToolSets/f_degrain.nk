@@ -1,0 +1,58 @@
+set cut_paste_input [stack 0]
+version 9.0 v7
+push $cut_paste_input
+OFXuk.co.thefoundry.furnace.f_degrain_v403 {
+colourSpace Cineon
+amount 1
+output Result
+grain 10
+"Analysis Region" 0
+regionBL {863.9999771 485.9999871}
+regionTR {1056.000023 594.0000129}
+frame 1
+Advanced 0
+Frequencies 0
+processSmall true
+smallAmount 1
+processMedium true
+mediumAmount 1
+processLarge true
+largeAmount 1
+processHuge true
+hugeAmount 1
+Channels 0
+redAmount 1
+greenAmount 1
+blueAmount 1
+notBeenAnalysed true
+inputHasChanged true
+magic0HR 0.003
+magic0DR 0.003922
+magic0HG 0.003
+magic0DG 0.003922
+magic0HB 0.003
+magic0DB 0.003922
+magic1HR 0.003922
+magic1DR 0.003922
+magic1HG 0.003922
+magic1DG 0.003922
+magic1HB 0.003922
+magic1DB 0.003922
+magic2HR 0.001961
+magic2DR 0.00098
+magic2HG 0.001961
+magic2DG 0.00098
+magic2HB 0.001961
+magic2DB 0.00098
+magic3HR 0.001961
+magic3DR 0.00098
+magic3HG 0.001961
+magic3DG 0.00098
+magic3HB 0.001961
+magic3DB 0.00098
+cacheBreaker true
+name F_DeGrain1
+selected true
+xpos 261
+ypos 662
+}
