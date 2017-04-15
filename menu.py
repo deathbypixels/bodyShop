@@ -1,4 +1,4 @@
-import nuke
+#import nuke
 
 import default
 import paintFlip
@@ -9,6 +9,9 @@ nuke.menu("Animation").addCommand("default/set as new knobDefault", "default.cre
 nuke.menu("Animation").addCommand("default/reset", "default.resetToDefault()")
 
 ##BodyShop customizations
+# Add favorite directories
+nuke.addFavoriteDir('Shows', 'Z:/CURRENT_PROJECTS', tooltip='Facility Root',  icon='BodyShop_Logo.png')
+
 import autowrite
 
 #### From Nukepedia - Ben Dickson
@@ -30,9 +33,13 @@ nuke.menu( 'Nuke' ).addCommand( 'Utilities/Read from Write', 'readFromWrite.Read
 ## From Nukepedia - Frederick Averpil
 ## Make Browse Dir function
 import browseDir
-nuke.menu( 'Nuke' ).addCommand( 'Utilities/Browse/Node\'s file path', "browseDir.browseDirByNode()" )
+nuke.menu( 'Nuke' ).addCommand( 'Utilities/Browse/Node\'s file path', "browseDir.browseDirByNode()", 'shift+b' )
 nuke.menu( 'Nuke' ).addCommand( 'Utilities/Browse/Scripts folder', "browseDir.browseDir('scripts')" )
 nuke.menu( 'Nuke' ).addCommand( 'Utilities/Paint/paintFlip', paintFlip.paintFlip, 'shift+f' )
+
+# Tools for Beauty Work
+# From cubichead.com - MAZYAR SHARIFIAN
+nuke.menu( 'Nuke' ).addCommand( 'Utilities/Beauty/Freq Separation', "nuke.createNode('CH_FrequencySeparation')" )
 
 # Various Edge Gizmos for Keying
 # From Nukepedia - Frank Reuter
@@ -49,6 +56,12 @@ nuke.menu( 'Nuke' ).addCommand( 'Utilities/Keying/Despill Madness', "nuke.create
 
 ## From Nukepedia - Luma Pictures
 nuke.menu( 'Nuke' ).addCommand( 'Utilities/Keying/Luma Grain', "nuke.createNode('L_Grain_v05')" )
+
+## From Nukepedia - Damian Binder
+nuke.menu( 'Nuke' ).addCommand('Utilities/Filter/Real Heat Distortion', "nuke.createNode('RealHeatDist')", icon='RealHeatDistortionIcon.png')
+
+## From Nukepedia - Diogo Girondo
+nuke.menu( 'Nuke' ).addCommand( 'Utilities/Time/dFielder', "nuke.createNode('dFielder')" )
 
 # From Tor Andreassen - http://www.fxtor.net/
 import FrameHold

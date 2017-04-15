@@ -1,8 +1,15 @@
+# Fix filepaths cross platform
+import platform
+def filenameFix(filename):
+    if platform.system() in ("Windows", "Microsoft"):
+        return filename.replace( "/Volumes/bodyshopserver/", "Z:\\" )
+    return filename.replace( "Z:\\", "/Volumes/bodyshopserver/" )
+
 #Verbose debuggimg
 import callbacksTrace
 
 ## Adds the builtin rollingAutosave to save yourself from bad script saves
-#import nukescripts.rollingAutoSave
+import nukescripts.rollingAutoSave
 
 #Add the subfolders in the .nuke directory for organization
 nuke.pluginAddPath( './gizmos' )
@@ -33,12 +40,13 @@ nuke.addBeforeRender(createWriteDir)
 #nuke.knobDefault("Read.raw", "True")
 nuke.knobDefault("Read.before", "black")
 nuke.knobDefault("Read.after", "black")
-nuke.knobDefault("Root.first_frame", "101")
-nuke.knobDefault("Root.last_frame", "201")
+nuke.knobDefault("Root.first_frame", "1001")
+nuke.knobDefault("Root.last_frame", "2001")
 nuke.knobDefault("Viewer.viewerProcess", "rec709")
 
 nuke.knobDefault("Root.fps", "23.976")
 nuke.knobDefault("Root.format", "HD_1080")
+# nuke.knobDefault( 'channels', 'rgba' )
 
 # add nuke plugin paths for fxT tools and icons
 

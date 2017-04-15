@@ -1,34 +1,53 @@
-Gizmo {
+Group {
+ name fxT_edgeMatte
  inputs 3
+ help "Edge Matte for any alpha input with more control than Nuke's built in EdgeDetect node.\n\nDevloped by Tor Andreassen - www.fxtor.net"
  tile_color 0xf8ff00ff
- addUserKnob {20 fxT_edgeMatte l fxt_edgeMatte}
+ addUserKnob {20 fxT_edgeMatte}
  addUserKnob {7 DialateOutside_Slider l "external edge:          " t "Drag the slider to grow/shrink the outside matte." R 0 100}
  DialateOutside_Slider 1
  addUserKnob {6 offOutsideMatteSize l on/off t "tur off outside matte alteration\n" -STARTLINE}
  addUserKnob {7 ErodeInside_Slider l "internal edge:           " t "Drag the slider to grow/shrink the inside matte." R 0 100}
  ErodeInside_Slider 1
  addUserKnob {6 offInsideMatteSize l on/off t "tur off inside matte alteration\n" -STARTLINE}
- addUserKnob {26 divline0 l "" +STARTLINE}
+ addUserKnob {26 ""}
  addUserKnob {7 BlurOutside_Slider l "blur external edge:    " t "Drag the slider to blur the external edge." R 0 100}
  addUserKnob {6 offBlurOutside l on/off t "turn off outside matte blur" -STARTLINE}
  addUserKnob {7 BlurInside_Slider l "blur internal edge:     " t "Drag the slider to blur the internal edge." R 0 100}
  addUserKnob {6 offBlurInside l on/off t "turn off inside matte blur" -STARTLINE}
- addUserKnob {26 divline1 l "" +STARTLINE}
+ addUserKnob {26 ""}
  addUserKnob {7 OverallBlur_Slider l "overall matte blur:     " t "Drag the slider to add overall blur to the edge matte." R 0 100}
- addUserKnob {26 divline2 l "" +STARTLINE}
- addUserKnob {7 offset l "center offset:            " t "Drag the slider to offset the edgeMatte.\n0 = no offset.\n\nThis will result in scaling or shrinking the edgeMatte." R -1 1}
- addUserKnob {26 divline3 l "" +STARTLINE}
- addUserKnob {4 previewColor l "       preview overlay color:  " t "Pick the overlay color to use when the plate input is in use.\n\nThis is intended to show a preview of the edgeMatte if there is a plate input. If no plate input exists, there will not be a overlay displayed.\nHandy for getting a visual representation of edgematte." -STARTLINE M {red green blue "" "" "" ""}}
+ addUserKnob {26 ""}
+ addUserKnob {26 alphaGrade_h3 l "" +STARTLINE T "<h3>Alpha Grade</h3>"}
+ addUserKnob {26 alphaGradeInfo l "" +STARTLINE T "<font color=grey>grade the alpha channel to addjust the edgeMatte<br /></font>"}
+ addUserKnob {41 gamma T GradeAlpha.gamma}
+ addUserKnob {41 white l gain T GradeAlpha.white}
+ addUserKnob {26 ""}
+ addUserKnob {4 previewColor l "       preview color:  " t "Pick the overlay color to use when the plate input is in use.\n\nThis is intended to show a preview of the edgeMatte if there is a plate input. If no plate input exists, there will not be a overlay displayed.\nHandy for getting a visual representation of the edgematte." -STARTLINE M {red green blue "" "" "" "" "" ""}}
  previewColor blue
- addUserKnob {7 previewOpacity l "preview opacity:       " t "Drag the slider to set the opacity of the preview overlay."}
- previewOpacity 0.4
- addUserKnob {26 divline4 l "" +STARTLINE}
- addUserKnob {6 invertMask l "invert mask" t "Click this to invert the mask input.\n____________________________<br />\nInvert mask is only applied to the mask input of this node and will not affect the main alpha-input." +STARTLINE}
- addUserKnob {26 divline5 l "" +STARTLINE}
- addUserKnob {26 info l "" +STARTLINE T "<font color=grey>This tool creates an edge matte based on the alpha input.<br />\nDrag the sliders to addjust the edgeMatte to fit your compositing needs.<br /><br />\nPS: The plate input is for previewing the edge matte over a plate.<br />This node only outputs an alpha channel. RGB is only preserved in preview mode. </font>"}
- addUserKnob {26 divline6 l "" +STARTLINE}
- addUserKnob {26 copyright l "" +STARTLINE T "<font color='#454545'>// fxT_edgeMatte v1.4 © Tor Andreassen - www.fxtor.net </font>"}
+ addUserKnob {7 previewOpacity l "    opacity:     " t "Drag the slider to set the opacity of the preview overlay." -STARTLINE}
+ previewOpacity 0.7
+ addUserKnob {26 ""}
+ addUserKnob {6 invertMask l "invert mask input" t "Click this to invert the mask input.\n____________________________<br />\nInvert mask is only applied to the mask input of this node and will not affect the main alpha-input." +STARTLINE}
+ addUserKnob {26 ""}
+ addUserKnob {26 info l "" +STARTLINE T "<font color=grey>This tool creates an edge matte based on the alpha input.<br />\nDrag the sliders to addjust the edge matte to fit your compositing needs.<br /><br />\n\nThis node only outputs an alpha channel. Hook up the plate-input<br />to preview the edge matte over a plate/comp/etc.</font>"}
+ addUserKnob {26 ""}
+ addUserKnob {26 copyright l "" +STARTLINE T "<font color='#454545'>// fxT_edgeMatte v1.9 © Tor Andreassen - www.fxtor.net</font>"}
 }
+ BackdropNode {
+  inputs 0
+  name all_to_alpha
+  tile_color 0x44444401
+  gl_color 0x44444401
+  label "all to alpha"
+  note_font "Arial Black"
+  note_font_size 20
+  xpos -1102
+  ypos 883
+  bookmark false
+  bdwidth 1663
+  bdheight 136
+ }
  BackdropNode {
   inputs 0
   name createEdge
@@ -37,11 +56,25 @@ Gizmo {
   label "erode/dialate to create the edgematte\n"
   note_font "Arial Black"
   note_font_size 20
-  xpos -1096
-  ypos 266
+  xpos -1099
+  ypos -91
   bookmark false
   bdwidth 1658
-  bdheight 688
+  bdheight 517
+ }
+ BackdropNode {
+  inputs 0
+  name gradeAlpha
+  tile_color 0x44444401
+  gl_color 0x44444401
+  label "grade and clamp alpha"
+  note_font "Arial Black"
+  note_font_size 20
+  xpos -1105
+  ypos 1039
+  bookmark false
+  bdwidth 1666
+  bdheight 165
  }
  BackdropNode {
   inputs 0
@@ -51,11 +84,11 @@ Gizmo {
   label "preview edgematte"
   note_font "Arial Black"
   note_font_size 20
-  xpos -1092
-  ypos 1415
+  xpos -1104
+  ypos 1228
   bookmark false
-  bdwidth 1665
-  bdheight 897
+  bdwidth 1666
+  bdheight 706
  }
  BackdropNode {
   inputs 0
@@ -65,8 +98,8 @@ Gizmo {
   label "remove inverted matte if mask is used"
   note_font "Arial Black"
   note_font_size 20
-  xpos -1093
-  ypos 972
+  xpos -1103
+  ypos 445
   bookmark false
   bdwidth 1665
   bdheight 424
@@ -76,28 +109,28 @@ Gizmo {
   name mask
   label "\[value number]"
   xpos -975
-  ypos 1031
+  ypos 509
   number 1
  }
  Dot {
   name Dot14
   xpos -953
-  ypos 1112
+  ypos 590
  }
-set N191c9b70 [stack 0]
+set N2597b440 [stack 0]
  NoOp {
   name autoAlphaCheck
   xpos -812
-  ypos 1120
+  ypos 598
   addUserKnob {20 autoAlphaCheck}
   addUserKnob {6 a +STARTLINE}
   a {{"\[string first \".a\" \[channels \[input this 0]]]>-1"}}
  }
-push $N191c9b70
+push $N2597b440
  Invert {
   name InvertMask
   xpos -975
-  ypos 1193
+  ypos 671
   disable {{(parent.invertMask)}}
  }
  Expression {
@@ -108,95 +141,273 @@ push $N191c9b70
   name smoothStep
   label "kill visable pixels on the edge of the inverted matte"
   xpos -975
-  ypos 1271
+  ypos 749
  }
  Input {
   inputs 0
   name alpha
   label "\[value number]"
-  xpos -526
-  ypos 71
+  xpos -509
+  ypos -222
  }
  Remove {
   channels rgb
   name Remove1
   label "kill RGB channels"
-  xpos -526
-  ypos 185
+  xpos -509
+  ypos -160
  }
  Dot {
   name Dot6
   tile_color 0x494949ff
-  xpos -504
-  ypos 416
+  xpos -484
+  ypos 21
  }
-set N297aa8f0 [stack 0]
+set N25995580 [stack 0]
  Dot {
   name Dot7
   tile_color 0x494949ff
   xpos -315
-  ypos 416
+  ypos 21
  }
+set N25999790 [stack 0]
  Erode {
-  size {{(ErodeInside_Slider)-1}}
+  size {0 0}
+  name ErodeInsideDefault
+  xpos -211
+  ypos 142
+ }
+push $N25999790
+ Group {
   name ErodeInside
-  xpos -337
-  ypos 502
-  disable {{this.parent.offInsideMatteSize}}
+  help "Dilate that works on subpixel level"
+  xpos -340
+  ypos 89
+  addUserKnob {20 User l Dilate}
+  addUserKnob {41 channels T Copy1.channels}
+  addUserKnob {7 size R -100 100}
+  size {{(parent.ErodeInside_Slider)-1}}
+  addUserKnob {41 maskChannelInput l mask T Copy1.maskChannelInput}
+  addUserKnob {41 inject -STARTLINE T Copy1.inject}
+  addUserKnob {41 invert_mask l invert -STARTLINE T Copy1.invert_mask}
+  addUserKnob {41 fringe -STARTLINE T Copy1.fringe}
+  addUserKnob {26 ""}
+  addUserKnob {6 bbox l "keep original bbox" t "check box to keep the original bbox" -STARTLINE}
+  addUserKnob {6 allToAlpha l "alpha in all channels" t "output alpha in all channels (rgba to aaaa)" -STARTLINE}
+  addUserKnob {26 ""}
+  addUserKnob {7 mix t "mix between the original input at 0 and the dilated output at 1"}
+  mix 1
+  addUserKnob {26 ""}
+  addUserKnob {26 info l "" +STARTLINE T "<font color=grey>Dilate node that works on subpixel level</font>"}
+ }
+  Input {
+   inputs 0
+   name alpha
+   xpos 91
+   ypos -255
+  }
+  Dot {
+   name Dot4
+   note_font_size 50
+   xpos 119
+   ypos -153
+  }
+set N259b5b10 [stack 0]
+  Erode {
+   size {{ceil(parent.size)} {ceil(parent.size)}}
+   name ErodeInside1
+   xpos 193
+   ypos -50
+  }
+push $N259b5b10
+  Erode {
+   size {{floor(parent.size)} {floor(parent.size)}}
+   name ErodeInside2
+   selected true
+   xpos -21
+   ypos -48
+  }
+  Dissolve {
+   inputs 2
+   which {{parent.size-floor(parent.size)}}
+   name Dissolve1
+   xpos 98
+   ypos 42
+  }
+  Dot {
+   name Dot2
+   note_font_size 50
+   xpos 123
+   ypos 159
+  }
+push $N259b5b10
+  Dot {
+   name Dot1
+   xpos 329
+   ypos -149
+  }
+  Copy {
+   inputs 2
+   from0 -rgba.alpha
+   to0 -rgba.alpha
+   channels alpha
+   maskChannelMask rgba.blue
+   name Copy1
+   xpos 303
+   ypos 152
+  }
+  Output {
+   name Output1
+   xpos 303
+   ypos 305
+  }
+  Viewer {
+   frame_range 1-100
+   center_fstop -1
+   name Viewer1
+   xpos -16
+   ypos 736
+  }
+ end_group
+ Switch {
+  inputs 2
+  which {{parent.offInsideMatteSize}}
+  name onoffInsideSwitch
+  xpos -339
+  ypos 148
  }
  Blur {
   size {{(BlurInside_Slider)+(OverallBlur_Slider)}}
   name BlurInside
-  xpos -337
-  ypos 560
+  xpos -340
+  ypos 187
   disable {{this.parent.offBlurInside}}
  }
  Dot {
   name Dot9
   tile_color 0x494949ff
   xpos -315
-  ypos 674
+  ypos 322
  }
-push $N297aa8f0
+push $N25995580
  Dot {
   name Dot5
   tile_color 0x494949ff
   xpos -670
-  ypos 416
+  ypos 21
  }
+set N28121370 [stack 0]
  Dilate {
+  size {1 1}
+  name Dilate_OutsideDefalt
+  xpos -840
+  ypos 149
+ }
+push $N28121370
+ Group {
+  name Dilate_Outside
+  help "Dilate that works on subpixel level"
+  xpos -695
+  ypos 93
+  addUserKnob {20 User l Dilate}
+  addUserKnob {41 channels T Copy1.channels}
+  addUserKnob {7 size R -100 100}
   size {{parent.DialateOutside_Slider}}
-  name DialateOutside
-  xpos -692
-  ypos 514
-  disable {{this.parent.offOutsideMatteSize}}
+  addUserKnob {41 maskChannelInput l mask T Copy1.maskChannelInput}
+  addUserKnob {41 inject -STARTLINE T Copy1.inject}
+  addUserKnob {41 invert_mask l invert -STARTLINE T Copy1.invert_mask}
+  addUserKnob {41 fringe -STARTLINE T Copy1.fringe}
+  addUserKnob {26 ""}
+  addUserKnob {26 info l "" +STARTLINE T "<font color=grey>Dilate node that works on subpixel level</font>"}
+ }
+  Input {
+   inputs 0
+   name alpha
+   xpos 91
+   ypos -255
+  }
+  Dot {
+   name Dot4
+   note_font_size 50
+   xpos 116
+   ypos -149
+  }
+set N259f8b20 [stack 0]
+  Dilate {
+   size {{ceil(parent.size)} {ceil(parent.size)}}
+   name Dilate_Max
+   xpos 168
+   ypos -35
+  }
+push $N259f8b20
+  Dilate {
+   size {{floor(parent.size)} {floor(parent.size)}}
+   name Dilate_Min
+   selected true
+   xpos 31
+   ypos -35
+  }
+  Dissolve {
+   inputs 2
+   which {{parent.size-floor(parent.size)}}
+   name Dissolve1
+   xpos 98
+   ypos 42
+  }
+  Dot {
+   name Dot2
+   note_font_size 50
+   xpos 123
+   ypos 159
+  }
+push $N259f8b20
+  Dot {
+   name Dot1
+   xpos 329
+   ypos -149
+  }
+  Copy {
+   inputs 2
+   from0 -rgba.alpha
+   to0 -rgba.alpha
+   channels alpha
+   maskChannelMask rgba.blue
+   name Copy1
+   xpos 303
+   ypos 152
+  }
+  Output {
+   name Output1
+   xpos 303
+   ypos 273
+  }
+ end_group
+ Switch {
+  inputs 2
+  which {{parent.offOutsideMatteSize}}
+  name onoffOutsideSwitch
+  xpos -695
+  ypos 155
  }
  Blur {
   size {{(BlurOutside_Slider)+(OverallBlur_Slider)}}
   name BlurOutside
-  xpos -692
-  ypos 566
+  xpos -695
+  ypos 190
   disable {{this.parent.offBlurOutside}}
  }
  Dot {
   name Dot2
   tile_color 0x494949ff
   xpos -670
-  ypos 674
+  ypos 323
  }
  Merge2 {
   inputs 2
   operation stencil
   name Merge1
   xpos -526
-  ypos 682
- }
- Transform {
-  scale {{parent.offset+1}}
-  center {{(((input.bbox.r)-(input.bbox.x))/2)+(input.bbox.x)} {(((input.bbox.t)-(input.bbox.y))/2)+(input.bbox.y)}}
-  name offsetEdgeMatte
-  xpos -526
-  ypos 729
+  ypos 327
  }
  Merge2 {
   inputs 2
@@ -204,87 +415,109 @@ push $N297aa8f0
   name Merge2
   label "removes inverted matte if custom mask exists"
   xpos -526
-  ypos 1271
+  ypos 749
   disable {{!parent.autoAlphaCheck.a}}
+ }
+ Shuffle {
+  red alpha
+  green alpha
+  blue alpha
+  name Shuffle2
+  tile_color 0xffffffff
+  label alphaOnly
+  xpos -526
+  ypos 947
+ }
+ Grade {
+  channels rgba
+  name GradeAlpha
+  xpos -526
+  ypos 1107
+ }
+ Clamp {
+  channels alpha
+  name Clamp1
+  xpos -526
+  ypos 1151
  }
  Dot {
   name Dot8
   tile_color 0x494949ff
   xpos -504
-  ypos 1769
+  ypos 1585
  }
-set N1db70fd0 [stack 0]
+set N281668b0 [stack 0]
  Dot {
   name Dot1
   tile_color 0x494949ff
   xpos -504
-  ypos 1996
+  ypos 1720
  }
-set N29888650 [stack 0]
+set N2816aae0 [stack 0]
  Dot {
   name Dot11
   tile_color 0x494949ff
   label "\n\ninclude edgeMatte alpha channel in preview mode"
   xpos -25
-  ypos 1996
+  ypos 1720
  }
-push $N1db70fd0
+push $N281668b0
  Multiply {
   channels alpha
   value {{parent.previewOpacity}}
   name MultiplyOverlay
-  xpos -190
-  ypos 1771
+  xpos -213
+  ypos 1584
  }
  Input {
   inputs 0
   name plate
   label "\[value number]"
   xpos 377
-  ypos 69
+  ypos -215
   number 2
  }
  Dot {
   name Dot12
   tile_color 0x494949ff
   xpos 399
-  ypos 1474
+  ypos 1287
  }
-set N2985eed0 [stack 0]
+set N162d5910 [stack 0]
  Remove {
   name Remove2
   xpos 44
-  ypos 1476
+  ypos 1289
  }
  Shuffle {
   name Shuffle5
   label rgba
   xpos 44
-  ypos 1540
+  ypos 1353
  }
-set N2985d550 [stack 0]
+set N162e1750 [stack 0]
  Add {
   value {0 0 1 1}
   name Add3
   tile_color 0xffff
   xpos 141
-  ypos 1591
+  ypos 1404
  }
-push $N2985d550
+push $N162e1750
  Add {
   value {0 1 0 1}
   name Add2
   tile_color 0xff00ff
   xpos 44
-  ypos 1587
+  ypos 1400
  }
-push $N2985d550
+push $N162e1750
  Add {
   value {1 0 0 1}
   name Add1
   tile_color 0xff0000ff
   xpos -53
-  ypos 1587
+  ypos 1400
  }
  Switch {
   inputs 3
@@ -292,7 +525,7 @@ push $N2985d550
   name SwitchOverlay
   tile_color 0x272727ff
   xpos 44
-  ypos 1666
+  ypos 1479
  }
  Copy {
   inputs 2
@@ -300,45 +533,45 @@ push $N2985d550
   to0 rgba.alpha
   name Copy1
   xpos 44
-  ypos 1771
+  ypos 1584
  }
  Premult {
   name Premult1
   xpos 44
-  ypos 1818
+  ypos 1631
  }
-push $N2985eed0
+push $N162d5910
  Merge2 {
   inputs 2
   name Merge3
   xpos 377
-  ypos 1818
+  ypos 1631
  }
  Copy {
   inputs 2
   from0 rgba.alpha
   to0 rgba.alpha
   name Copy2
-  xpos 377
-  ypos 2001
+  xpos 374
+  ypos 1719
  }
  Dot {
   name Dot10
   tile_color 0x494949ff
   xpos 399
-  ypos 2130
+  ypos 1808
  }
-push $N29888650
+push $N2816aae0
  Switch {
   inputs 2
   which {{"\[exists parent.input2.label]"}}
   name previewMatte
-  xpos -526
-  ypos 2139
+  xpos -529
+  ypos 1813
  }
  Output {
   name Output1
-  xpos -526
-  ypos 2479
+  xpos -529
+  ypos 2315
  }
 end_group
