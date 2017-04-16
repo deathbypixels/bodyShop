@@ -17,7 +17,7 @@ This is done by playing a sound and showing a notification window.
 show_notification = True
 
 # play_sound: if True play a sound when render is done
-play_sound = False
+play_sound = True
 
 # sound_file: path of sound file
 sound_file = "{}/ralph_mittens.wav".format(os.path.dirname(__file__))

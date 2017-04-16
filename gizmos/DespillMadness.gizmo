@@ -139,7 +139,7 @@ push $N13a85a40
   ypos 44
   addUserKnob {20 User}
   addUserKnob {7 LimitPercentage l "fine tune" R 0.5 1.5}
-  LimitPercentage 0.94
+  LimitPercentage 1.0
  }
 push $N13a85a40
  Expression {
