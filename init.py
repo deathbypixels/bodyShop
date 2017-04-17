@@ -1,9 +1,30 @@
+import nuke
+
 # Fix filepaths cross platform
 import platform
 def filenameFix(filename):
     if platform.system() in ("Windows", "Microsoft"):
         return filename.replace( "/Volumes/bodyshopserver/", "Z:\\" )
     return filename.replace( "Z:\\", "/Volumes/bodyshopserver/" )
+
+# Create OS specific variables (no Linux support)
+import sys
+
+volProjects = ''
+volAssets = ''
+
+if(sys.platform == 'win32'):
+    volProjects = 'X:'
+    volAssets = 'Y:'
+    volShows = 'Z:'
+elif(sys.platform == 'darwin'):
+    volProjects = '/Volumes/CalDigit 6TB RAID 0 T3'
+    volAssets = '/Volumes/CalDigit 6TB RAID 0 T3'
+
+# Make these favorites show up in Nuke
+nuke.addFavoriteDir('Projects', volProjects + '/Projects/')
+nuke.addFavoriteDir('Media', volAssets + '/Media/')
+nuke.addFavoriteDir('Shows', volProjects + '/Shows/')
 
 # Verbose debuggimg
 import callbacksTrace
