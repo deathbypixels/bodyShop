@@ -126,7 +126,7 @@ nuke.menu('Nuke').addCommand('Bodyshop/MetaData')
 # import default
 # import default_helper as helper
 #
-default_menu = nuke.menu("Nuke").addMenu("Bodyshop/Other/default")
+# default_menu = nuke.menu("Nuke").addMenu("Bodyshop/Other/default")
 # default_menu = nuke.menu("Nuke").addMenu("Scripts/default")
 # default_menu.addCommand("defaults window", default.show_defaults_window, "", icon="")
 # default_menu.addSeparator()
