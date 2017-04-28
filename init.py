@@ -65,6 +65,9 @@ nuke.pluginAddPath( './python' )
 nuke.pluginAddPath( './plugins' )
 nuke.pluginAddPath( './icons')
 
+# Add nuBridge
+# nuke.pluginAddPath( './nuBridge' )
+
 # From Simon Jokshlies - www.leafpictures.de
 nuke.pluginAddPath("default")
 
