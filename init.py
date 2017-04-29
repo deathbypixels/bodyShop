@@ -66,7 +66,7 @@ nuke.pluginAddPath( './plugins' )
 nuke.pluginAddPath( './icons')
 
 # Add nuBridge
-# nuke.pluginAddPath( './nuBridge' )
+nuke.pluginAddPath( './nuBridge_osx64_v1.0.0' )
 
 # From Simon Jokshlies - www.leafpictures.de
 nuke.pluginAddPath("default")
