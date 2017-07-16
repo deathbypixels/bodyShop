@@ -120,6 +120,7 @@ nuke.menu('Nuke').addCommand('Bodyshop/MetaData')
 # endregion
 
 # # region Other Menu
+# All commands below now in default/menu.py - just change "Scripts/default" entry to "Bodyshop/Other"
 # # nuke.menu('Nuke').addCommand('Bodyshop/Other')
 # # From Simon Jokshlies - www.leafpictures.de
 # import nuke
