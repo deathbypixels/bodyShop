@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='utf-8'?>
+<defaults>
+  <default knob="black_clamp" node="Grade">False</default>
+</defaults>
