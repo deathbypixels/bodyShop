@@ -1,1 +1,0 @@
-from bakeGizmos import bakeGizmoRecursively
