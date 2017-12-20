@@ -155,7 +155,6 @@ m.addCommand("X_Tesla", "nuke.createNode('X_Tesla')", icon='X_Tesla.png')
 
 # add nuke plugin path for W_Hotbox www.woutergilsing.com
 import W_hotbox, W_hotboxManager
-
 # V!ctor GUI Customization
 # Copyright (c) 2016 Victor Perez. All Rights Reserved.
 
@@ -194,3 +193,4 @@ VMenu.addCommand('V_3DAxis', 'nuke.createNode("V_3DAxis")', icon='V_3DAxis.png')
 VMenu.addCommand('V_ColorCube', 'nuke.createNode("V_ColorCube")', icon='V_ColorCube.png')
 VMenu.addCommand('V_ColorTracker', 'nuke.createNode("V_ColorTracker")', icon='V_ColorTracker.png')
 VMenu.addCommand('V_Solarize', 'nuke.createNode("V_Solarize")', icon='V_Solarize.png')
+

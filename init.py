@@ -65,14 +65,11 @@ nuke.pluginAddPath( './python' )
 nuke.pluginAddPath( './plugins' )
 nuke.pluginAddPath( './icons')
 
-# Add nuBridge
-nuke.pluginAddPath( './nuBridge_osx64_v1.0.0' )
-
 # From Simon Jokshlies - www.leafpictures.de
 nuke.pluginAddPath("default")
 
 # Add Render Finished Message
-nuke.pluginAddPath("./renderFinished")
+# nuke.pluginAddPath("./renderFinished")
 
 # add nuke plugin paths for fxT tools and icons
 nuke.pluginAddPath('./fxT_tools')
